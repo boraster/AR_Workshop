@@ -15,14 +15,16 @@ public class AppManager : MonoBehaviour
     public PrefabPlacer prefabPlacer;
     // public ItemCounter itemCounter;
     // public MaxItemPopup maxItemPopup;
-
+    public ParticleSystem areaScanner;
+    public ARPlaneManager planeManager;
+    private bool isFirstPlaneAdded = false;
     //3D UI
     public MovementGizmo movementGizmo;
     public WorldSpaceInfoPanel infoPanel;
 
     //UI Buttons
-    // public Button clearSelectionButton;
-    // public Button clearAllButton;
+    public Button clearSelectionButton;
+    public Button clearAllButton;
 
     public SelectableObject currentlySelected;
 
@@ -52,6 +54,8 @@ public class AppManager : MonoBehaviour
         //clearAllButton.onClick.AddListener(DeleteAllPlacedObjects);
 
        // UpdateItemCount();
+
+       planeManager.planesChanged += PlaneAdded;
     }
 
     // Runs when info panel trash icon is clicked.
@@ -150,7 +154,22 @@ public class AppManager : MonoBehaviour
         // clearSelectionButton.gameObject.SetActive(true);
     }
 
+    private bool FirstPlaneAdded()
+    {
+        return isFirstPlaneAdded;
+    }
 
+    private void PlaneAdded(ARPlanesChangedEventArgs args)
+    {
+        if (args.added.Count > 0)
+        {
+            isFirstPlaneAdded = true;
+        }
+        else
+        {
+            isFirstPlaneAdded = false;
+        }
+    }
     IEnumerator SceneFlowRoutine()
     {
         //First, disable all the UI except for the Scan Area Popup.
@@ -161,6 +180,9 @@ public class AppManager : MonoBehaviour
 
         //Wait until the session state is ready.
          yield return new WaitUntil(IsARSessionTracking);
+         areaScanner.Play();
+         yield return new WaitUntil(FirstPlaneAdded);
+         areaScanner.Stop();
 
         //Disable the Scan Area Popup
        scanAreaPopup.gameObject.SetActive(false);
