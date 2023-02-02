@@ -9,13 +9,14 @@ public class PrefabPlacer : MonoBehaviour
 
     public Material materialWhilePlacing;
 
-    public System.Action<SelectableObject> onPrefabPlaced;
-
+    public System.Action<SelectableObject, int> onPrefabPlaced;
+    public ParticleSystem particles;
     /// <summary>
     /// The object we are currently placing. If null, it means we have nothing to place.
     /// </summary>
     public SelectableObject objectToPlace;
 
+    private int itemId;
     /// <summary>
     /// The ARFoundation's RaycastManager is used to raycast and detect AR Planes.
     /// </summary>
@@ -42,7 +43,7 @@ public class PrefabPlacer : MonoBehaviour
     }
 
     //This should be called by the PrefabPicker once a Prefab is picked.
-    public void InstantiatePrefabAndStartPlacing(GameObject prefab)
+    public void InstantiatePrefabAndStartPlacing(GameObject prefab, int id)
     {
         //Stop placing if we are already placing.
         StopPlacing();
@@ -58,6 +59,8 @@ public class PrefabPlacer : MonoBehaviour
 
         //Make sure to add our component!
         this.objectToPlace = spawnedPrefab.AddComponent<SelectableObject>();
+        // spawnedPrefab.AddComponent<PriceTag>();
+        itemId = id;
         //
         // //Disable the selectable flag so we can't tap on it
         this.objectToPlace.SetSelectable(false);
@@ -84,19 +87,20 @@ public class PrefabPlacer : MonoBehaviour
         
         //Set the selectable flag so we can tap on it.
         placedObject.SetSelectable(true);
-        
+        particles.transform.position = placedObject.transform.position;
+        ManageParticles();
         //Stop placing
         StopPlacing();
         
         //Invoke our event
-        onPrefabPlaced?.Invoke(placedObject);
+        onPrefabPlaced?.Invoke(placedObject, placedObject.priceTag.itemId);
 
     }
 
     //Cancel the placing. This should be called when we start placing a new object.
     public void StopPlacing()
     {
-        //If ObjectToPlace is already active, destroy it and start anew.
+        // //If ObjectToPlace is already active, destroy it and start anew.
         if (this.objectToPlace != null) Destroy(this.objectToPlace.gameObject);
 
         //Disable the Tap to Place UI
@@ -111,6 +115,19 @@ public class PrefabPlacer : MonoBehaviour
     {
         //The ? is an inline null check
         tapToPlaceUI?.SetActive(active);
+    }
+    
+    public IEnumerator PlayParticlesAndStop()
+    {
+        particles.Play();
+        yield return new WaitForSeconds(1.5f);
+        particles.Stop();
+    }
+
+    public void ManageParticles()
+    {
+        StartCoroutine(PlayParticlesAndStop());
+
     }
 
     //Runs every frame. This raycasts and calculates where to place the object.
@@ -134,7 +151,9 @@ public class PrefabPlacer : MonoBehaviour
                 var hitPose = s_Hits[0].pose;
         
                 //Move the object to the detected plane position
+                
                 objectToPlace.transform.position = hitPose.position;
+                
             }
         
         }

@@ -8,8 +8,9 @@ public class MaterialPanel : MonoBehaviour
     public MaterialButton materialButtonTemplate;
 
     public bool IsShowing { get; private set; }
-    public System.Action<MaterialSwapper.MaterialSet> OnMaterialSetSelected { get; set; }
-
+    public System.Action< MaterialSwapper,MaterialSet.MaterialSetSetup> OnMaterialSetSelected { get; set; }
+    public System.Action<MaterialSwapper,MaterialSet.MaterialSetSetup> OnDefaultMaterialSetSelected { get; set; }
+    public MaterialButton defaultMatBtn;
     readonly List<MaterialButton> m_materialButtons = new List<MaterialButton>();
 
     private void Start()
@@ -43,9 +44,10 @@ public class MaterialPanel : MonoBehaviour
             m_materialButtons.Add(CreateMaterialButton());
         }
 
-        var defaultMatBtn = m_materialButtons[0];
+        defaultMatBtn = m_materialButtons[0];
         defaultMatBtn.ApplyMaterialSet(materialSwapper.m_defaultMaterialSet);
-        defaultMatBtn.onButtonClicked = () => { SelectDefaultMaterial(materialSwapper); };
+        defaultMatBtn.originalLabel.gameObject.SetActive(true);
+        defaultMatBtn.onButtonClicked = () => { SelectDefaultMaterial(materialSwapper,materialSwapper.m_defaultMaterialSet); };
         defaultMatBtn.gameObject.SetActive(true);
 
         //Enable the buttons and assign the information to them
@@ -53,30 +55,33 @@ public class MaterialPanel : MonoBehaviour
         {
             var materialSet = materialSwapper.materialSets[i];
             var matBtn = m_materialButtons[i + 1];
+            matBtn.originalLabel.gameObject.SetActive(false);
             matBtn.ApplyMaterialSet(materialSet);
             matBtn.onButtonClicked = () => { SelectMaterial(materialSwapper, materialSet); };
             matBtn.gameObject.SetActive(true);
         }
 
 
-        //Disable any extra buttons
-        for (int i = materialSetCount; i < m_materialButtons.Count; i++)
-        {
-            var matBtn = m_materialButtons[i];
-            matBtn.gameObject.SetActive(false);
-        }
+        // Disable any extra buttons
+         // for (int i = materialSetCount; i < m_materialButtons.Count; i++)
+         // {
+         //     var matBtn = m_materialButtons[i];
+         //     matBtn.gameObject.SetActive(false);
+         // }
 
     }
 
-    void SelectDefaultMaterial(MaterialSwapper materialSwapper)
+    void SelectDefaultMaterial(MaterialSwapper materialSwapper, MaterialSet.MaterialSetSetup set)
     {
         materialSwapper.RevertToOriginalMaterials();
+        OnDefaultMaterialSetSelected?.Invoke(materialSwapper, set);
+        // defaultMatBtn.originalLabel.gameObject.SetActive(true);
     }
 
-    void SelectMaterial(MaterialSwapper materialSwapper, MaterialSwapper.MaterialSet set)
+    void SelectMaterial(MaterialSwapper materialSwapper, MaterialSet.MaterialSetSetup set)
     {
         materialSwapper.ApplyMaterialSet(set);
-        OnMaterialSetSelected?.Invoke(set);
+        OnMaterialSetSelected?.Invoke( materialSwapper, set);
     }
 
 

@@ -21,7 +21,7 @@ public class PrefabPicker : MonoBehaviour
     /// <summary>
     /// This is called when a prefab is picked.
     /// </summary>
-    public System.Action<GameObject> onPrefabPicked;
+    public System.Action<GameObject, int> onPrefabPicked;
 
     public System.Action onCancel;
 
@@ -30,6 +30,7 @@ public class PrefabPicker : MonoBehaviour
     /// </summary>
     public Button cancelButton;
 
+    // public PriceTag itemTag;
     /// <summary>
     /// Keeping a list of all of our instantiated buttons.
     /// </summary>
@@ -84,15 +85,20 @@ public class PrefabPicker : MonoBehaviour
             //If the prefab doesn't exist (null field) then skip it
             if (prefab == null) continue;
             //Create the button for this prefab
-            var prefabButton = CreateButtonFromPrefab(prefab);
+            var prefabButton = CreateButtonFromPrefab(prefab, i);
+            // itemTag.itemId = i;
             //Add our new button to our button list
             m_buttonList.Add(prefabButton);
+
+           var priceTag = prefab.GetComponent<PriceTag>();
+            priceTag.CalculatePrice();
+            priceTag.itemId = i;
         }
     }
 
 
     //This is called once for every prefab in the list
-     PrefabPickerButton CreateButtonFromPrefab(GameObject prefab)
+     PrefabPickerButton CreateButtonFromPrefab(GameObject prefab, int id)
      {
         // Clone the ButtonTemplate
          var prefabButton = CloneButtonTemplate();
@@ -107,7 +113,7 @@ public class PrefabPicker : MonoBehaviour
          prefabButton.onSelect.AddListener(() =>
          {
              //Run this code when the button gets clicked
-             OnButtonSelected(prefabButton);
+             OnButtonSelected(prefabButton, id);
          });
 
         // Enable our new button
@@ -117,7 +123,7 @@ public class PrefabPicker : MonoBehaviour
      }
 
     //This runs when a button is clicked
-    void OnButtonSelected(PrefabPickerButton selectedPickerButton)
+    void OnButtonSelected(PrefabPickerButton selectedPickerButton, int id)
     {
         //Our prefab has been picked!
         var pickedPrefab = selectedPickerButton.linkedPrefab;
@@ -134,7 +140,7 @@ public class PrefabPicker : MonoBehaviour
         //Now, let's give the selected prefab to the PrefabPlacer
         //The PrefabPlacer should be subscribed to this event.
         //This will also pass the pickedPrefab as a parameter to the event.
-        onPrefabPicked?.Invoke(pickedPrefab);
+        onPrefabPicked?.Invoke(pickedPrefab, id);
     
         //Enable our Cancel button
         cancelButton.gameObject.SetActive(true);

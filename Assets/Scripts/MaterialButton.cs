@@ -8,6 +8,7 @@ public class MaterialButton : MonoBehaviour
 
     public Button button;
     public Image buttonIcon;
+    public Image originalLabel;
     public CanvasGroup highlightGroup;
     public System.Action onButtonClicked;
 
@@ -16,10 +17,11 @@ public class MaterialButton : MonoBehaviour
         button.onClick.AddListener(() => { onButtonClicked?.Invoke(); });
     }
 
-    public void ApplyMaterialSet(MaterialSwapper.MaterialSet set)
+    public void ApplyMaterialSet(MaterialSet.MaterialSetSetup set)
     {
         buttonIcon.overrideSprite = set.buttonIcon;
         buttonIcon.color = set.buttonColor;
+        
     }
 
 }

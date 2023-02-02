@@ -7,8 +7,9 @@ using UnityEngine.EventSystems;
 public class SelectableObject : MonoBehaviour, IPointerClickHandler
 {
     //Global event for others to subscribe to when this object gets selected.
-    public static System.Action<SelectableObject> OnSelectableTapped;
+    public static System.Action<SelectableObject, int> OnSelectableTapped;
 
+    public PriceTag priceTag;
     //The materialSwapper helps us set materials on all the renderers
     public MaterialSwapper materialSwapper { get; private set; }
 
@@ -29,6 +30,8 @@ public class SelectableObject : MonoBehaviour, IPointerClickHandler
         //Create the MaterialSwapper component if it doesn't exist.
         materialSwapper = GetComponent<MaterialSwapper>();
         if (materialSwapper == null) materialSwapper = gameObject.AddComponent<MaterialSwapper>();
+
+        priceTag = GetComponent<PriceTag>();
     }
 
     //When tapped on by the user, run our OnSelectableTapped callback
@@ -42,7 +45,7 @@ public class SelectableObject : MonoBehaviour, IPointerClickHandler
         }
 
         //This object gets selected when clicked on
-        OnSelectableTapped?.Invoke(this);
+        OnSelectableTapped?.Invoke(this, priceTag.itemId);
     }
 
 }

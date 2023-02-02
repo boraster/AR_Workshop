@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4150448261804106}
   - component: {fileID: -2920938893689097691}
   - component: {fileID: -2450967439018209982}
+  - component: {fileID: -805122580594479150}
   m_Layer: 0
   m_Name: Recipio_SmallTable
   m_TagString: Untagged
@@ -61,26 +62,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc98f06d5059f4208af2b7a06a1b2e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMaterialSet:
+  materialSet: {fileID: 11400000, guid: a4247c05a0f87404ebd6d158d68fa24b, type: 2}
+  m_defaultMaterialSet:
     buttonColor: {r: 1, g: 1, b: 1, a: 1}
     material: {fileID: 0}
     buttonIcon: {fileID: 0}
-  materialSets:
-  - buttonColor: {r: 1, g: 1, b: 1, a: 1}
-    material: {fileID: 2100000, guid: 3b73815012ec14126bc4b34a1685d403, type: 2}
-    buttonIcon: {fileID: 0}
-  - buttonColor: {r: 1, g: 0.3915094, b: 0.3915094, a: 1}
-    material: {fileID: 2100000, guid: 6b9e3377b6ea4470581bcb1c04893afe, type: 2}
-    buttonIcon: {fileID: 0}
-  - buttonColor: {r: 0.48627448, g: 1, b: 0.9459851, a: 1}
-    material: {fileID: 2100000, guid: 53d9c63dee2164478a832d66fdd6815d, type: 2}
-    buttonIcon: {fileID: 0}
-  - buttonColor: {r: 1, g: 0.8566359, b: 0.08018869, a: 1}
-    material: {fileID: 2100000, guid: 7021922d3c0a64e12b925a0b73fccce8, type: 2}
-    buttonIcon: {fileID: 0}
-  - buttonColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
-    material: {fileID: 2100000, guid: 44ff434a59dcd4260a8a58769adc1c51, type: 2}
-    buttonIcon: {fileID: 0}
+  materialSets: []
+--- !u!114 &-805122580594479150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116597862090886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d449d8de9679f4c8a0e79acc9ee858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  price: 0
+  itemId: 0
+  howManyOfThisItem: 0
 --- !u!1 &1999886512060018
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +139,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -161,6 +164,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &3782101311206210720
 MeshCollider:
   m_ObjectHideFlags: 0
