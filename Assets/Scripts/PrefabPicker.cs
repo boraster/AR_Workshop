@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -37,13 +38,19 @@ public class PrefabPicker : MonoBehaviour
     readonly List<PrefabPickerButton> m_buttonList = new List<PrefabPickerButton>();
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        CreateButtonsFromPrefabsList();
+
+    }
+
     void Start()
     {
         //Disable the template
         buttonTemplate.gameObject.SetActive(false);
 
         //Create all the buttons from the prefabs in the list
-        CreateButtonsFromPrefabsList();
 
         //Cancel picking before we start just to clear all variables
         ClearHighlight();

@@ -11,7 +11,7 @@ public class CartItems : MonoBehaviour
     private PriceTag priceTag;
 
 
-    private void Awake()
+    private void Start()
     {
         FillOutDictionaries();
     }
