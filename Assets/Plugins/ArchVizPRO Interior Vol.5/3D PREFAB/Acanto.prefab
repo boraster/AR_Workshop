@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1348091697595960138}
   - component: {fileID: 5724264157609295501}
   m_Layer: 0
-  m_Name: Acanto_Bench
+  m_Name: Acanto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

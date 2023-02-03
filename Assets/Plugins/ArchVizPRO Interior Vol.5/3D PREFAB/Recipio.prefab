@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2450967439018209982}
   - component: {fileID: -805122580594479150}
   m_Layer: 0
-  m_Name: Recipio_SmallTable
+  m_Name: Recipio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

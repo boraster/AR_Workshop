@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 8722570378340684542}
   - component: {fileID: -7278954115900012715}
   m_Layer: 0
-  m_Name: Sella_Large
+  m_Name: Sella
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

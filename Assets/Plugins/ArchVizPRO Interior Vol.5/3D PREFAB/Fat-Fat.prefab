@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: -4854310094943575219}
   - component: {fileID: 2738396909021280399}
   m_Layer: 0
-  m_Name: Fat-Fat_Large
+  m_Name: Fat-Fat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

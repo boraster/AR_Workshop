@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -4893442545292383406}
   - component: {fileID: 632075049860059607}
   m_Layer: 0
-  m_Name: Eracle_Console
+  m_Name: Eracle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

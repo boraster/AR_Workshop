@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: -9116362788685638782}
   - component: {fileID: -2125440680319373440}
   m_Layer: 0
-  m_Name: Sofa_Exterior
+  m_Name: Sofa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
